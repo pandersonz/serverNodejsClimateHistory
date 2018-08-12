@@ -1,0 +1,22 @@
+{
+  "name": "serversaveweatherinmysql",
+  "version": "1.0.0",
+  "description": "server to save a climate history from openWeatherMap in MySql",
+  "main": "Listen.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandersonz/serverNodejsClimateHistory.git"
+  },
+  "author": "Paul Anderson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandersonz/serverNodejsClimateHistory/issues"
+  },
+  "homepage": "https://github.com/pandersonz/serverNodejsClimateHistory#readme",
+  "dependencies": {
+    "timers": "^0.1.1"
+  }
+}

@@ -1,6 +1,11 @@
-var dgram = require("dgram");
-var server = dgram.createSocket("udp4");
 
+const objtime = require('timers');
+function apiUrlWeather(){
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&APPID="+clientIdWeather;
+    console.log(apiUrl);
+    return apiUrl.toString();
+   
+  }
 let ubication = {
     0:{
         name:'Santa Cruz - Bolivia',
@@ -23,21 +28,18 @@ let ubication = {
         latitude:-14.8299422
     }
 }
-    server.on("message", function (msg, rinfo) {
-        getAllWeatherFomObject(ubication);
-    });
        
-    server.on("listening", function () {
-       console.log('escuchando')
-        });
-        
-        server.bind(20500);
-        let dataWeather;
+          let dataWeather=[];
+        const timeoutObj = setInterval(getAllWeatherFomObject(ubication), 1500);
+       
         function getAllWeatherFomObject (obj){
             var lim= Object.keys(obj).length;
+            console.log(obj['0']);
             for(let i=0;i<lim;i++){
-               dataWeather.push(getAllWeatherFomObject(obj[i].latitude,obj[i].longtitude));
+               getWeatherForHistoric(obj[i.toString()].latitude,obj[i.toString()].longtitude);
+               console.log('entro');
             }
+           
         }
         function getWeatherForHistoric(latitude,longtitude) {
             console.log("ejecuta el api clima")
@@ -50,9 +52,9 @@ let ubication = {
                 APPID: clientIdWeather
               },
               success: data => {
-                 console.log(data["main"]["temp"] + " C"+" id"+ data["name"]);
-                 var 
-                return 
+                {
+                   console.log(data["main"]["temp"] + " C"+" id"+ data["name"]);
+                 }
               }
               
             })
