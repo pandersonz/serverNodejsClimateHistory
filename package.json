@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pandersonz/serverNodejsClimateHistory#readme",
   "dependencies": {
+    "node-fetch": "^2.2.0",
     "timers": "^0.1.1"
   }
 }
