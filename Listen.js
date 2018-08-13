@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const time = require('timers');
+//const time = require('timers');
 global.fetch = require("node-fetch");
 let cTemp='000';
 let con = mysql.createConnection({
@@ -48,8 +48,8 @@ let ubication = {
        
           let dataWeather=[];
         //const timeoutObj = time.setInterval(getAllWeatherFomObject(ubication), 60000);
-       getAllWeatherFomObject(ubication);
-       guardarObjetoEnMysql(con, objDatos);
+      let nu = setInterval(function(){getAllWeatherFomObject(ubication)},10000);
+      
         function getAllWeatherFomObject (obj){
             var lim= Object.keys(obj).length;
             console.log('el limite es'+lim);
@@ -99,12 +99,14 @@ let ubication = {
                 // If there is any error you will catch them here
                 console.error('el error es:'+error);
                 });   
-                //console.log(result);
+                console.log('objDatos '+objDatos);
+                guardarObjetoEnMysql(con, objDatos,ubication);
           }
           
-          function guardarObjetoEnMysql( conexion, objWeather, ubication){
+          function guardarObjetoEnMysql( conexion, objWeather, ubicationW){
             for(let i=0;i<4;i++){  
-            let sql = "INSERT INTO weather VALUES (0,'"+ubication[i.toString()].name+"','"+objWeather[i].description+"','"+objWeather[i].currenttemp+"','"+ubication[i.toString()].longitude+","+ubication[i.toString()].latitude+"')";
+                console.log(objWeather);
+            let sql = "INSERT INTO Datos VALUES (0,'"+ubicationW[i.toString()].name+"','"+objWeather[i].description+"','"+objWeather[i].currenttemp+"',NOW(),'"+ubicationW[i.toString()].longitude+","+ubicationW[i.toString()].latitude+")";
             console.log(sql);
             conexion.query(sql, function (err, result) {
                 if (err) throw err;
