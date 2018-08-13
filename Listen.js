@@ -1,5 +1,12 @@
-
+const mysql = require('mysql');
 const objtime = require('timers');
+
+let con = mysql.createConnection({
+    host: "127.0.0.1",
+    user: "prueba",
+    password: "123456",
+    database:"bd_HistoricWeather"
+});   
 function apiUrlWeather(){
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&APPID="+clientIdWeather;
     console.log(apiUrl);
@@ -59,3 +66,11 @@ let ubication = {
               
             })
           }
+          function guardarObjetoEnMysql( conexion, objWeather){
+            let sql = "INSERT INTO weather VALUES (0,"+objWeather.temperature+","+objWeather.date+","+objWeather.idUbication+")";
+            console.log(sql);
+            conexion.query(sql, function (err, result) {
+                if (err) throw err;
+                console.log("1 record inserted");
+            });
+        }
