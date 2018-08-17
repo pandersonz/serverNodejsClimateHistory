@@ -88,7 +88,7 @@ let ubication = {
           function guardarObjetoEnMysql( conexion, objWeather, pLon, pLat, pName){
             let date = new Date();
             console.log(date);
-            let sql = "INSERT INTO Datos VALUES (0,'"+pName+"','"+objWeather.description+"','"+objWeather.currenttemp+"','"+date+"',"+pLon+","+pLat+")";
+            let sql = "INSERT INTO Datos VALUES (0,'"+pName+"','"+objWeather.description+"','"+objWeather.currenttemp+"','"+objWeather.mintemp+"','"+objWeather.maxtemp+"','"+date+"',"+pLon+","+pLat+")";
             conexion.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("1 record inserted");
