@@ -1,0 +1,14 @@
+create database db_historicWeather;
+
+use db_historicWeather;
+
+create table Datos
+(
+id int not null primary key auto_increment,
+name varchar(100) not null,
+descriptionWeather varchar(50) not null,
+currentTemp varchar(5) not null,
+dateWeather date not null,
+longitude float not null,
+latitude float not null
+);
