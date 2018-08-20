@@ -25,7 +25,7 @@ function apiUrlWeather(lon, lat){
     return apiUrl.toString();
    
   }
-
+//add ubication of the weather required
 let ubication = {
     0:{
         name:'Santa Cruz - Bolivia',
@@ -49,9 +49,9 @@ let ubication = {
     }
 }
        
-        
+ //interval of time to obtains data of the weather       
         let nu = setInterval(function(){getAllWeatherFomObject(ubication)},10000);
-      
+ //obtains data of the weather for all points of the ubication     
         function getAllWeatherFomObject (obj){
             var lim= Object.keys(obj).length;
             console.log('el limite es'+lim);
@@ -60,7 +60,7 @@ let ubication = {
             }          
         }
         
-          
+//obtains data of the weather with latitude and longitude          
           function getWeatherForHistoric(latitude,longtitude,pname) {
             let urlWeather =  apiUrlWeather(latitude,longtitude);
             fetch(urlWeather)
@@ -95,7 +95,7 @@ let ubication = {
                 });   
                 
           }
-          
+//save the object with the current weather in the mysql          
           function guardarObjetoEnMysql( conexion, objWeather, pLon, pLat, pName){
             let date = new Date();
             console.log(date);
@@ -107,7 +107,7 @@ let ubication = {
         
         }
 
-
+//CRUD
     objExpress.get('/datos', function(req, res) {
     var query = "SELECT * FROM datos";
     con.query(query, function(err, rows, col) {
