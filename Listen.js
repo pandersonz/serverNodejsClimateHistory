@@ -87,7 +87,7 @@ let ubication = {
                     objData.pressure = data["main"]["pressure"];
                     objData.speedWind = data["wind"]["speed"];
                     objData.degreeWind = data["wind"]["deg"];
-                    objData.rain = data["rain"]["3h"];
+                    objData.rain = data["rain"];
                     guardarObjetoEnMysql(con, objData,longtitude,latitude,pname);
                     
                 });  
@@ -98,9 +98,19 @@ let ubication = {
                 });   
                 
           }
+//this code convert the format of date in a format datetime for mysql
+//thanks https://stackoverflow.com/questions/5129624/convert-js-date-time-to-mysql-datetime
+function twoDigits(d) {
+  if(0 <= d && d < 10) return "0" + d.toString();
+  if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+  return d.toString();
+}        
+Date.prototype.toMysqlFormat = function() {
+  return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+};  
 //save the object with the current weather in the mysql          
           function guardarObjetoEnMysql( conexion, objWeather, pLon, pLat, pName){
-            let date = new Date();
+            let date = new Date().toMysqlFormat();
             console.log(date);
             let sql = "INSERT INTO Datos VALUES (0,'"+pName+"','"+objWeather.description+"','"+objWeather.currenttemp+"','"+objWeather.mintemp+"','"+objWeather.maxtemp+"','"+objWeather.humidity+"','"+objWeather.pressure+"','"+objWeather.speedWind+"','"+objWeather.degreeWind+"','"+objWeather.rain+"','"+date+"',"+pLon+","+pLat+")";
             conexion.query(sql, function (err, result) {
