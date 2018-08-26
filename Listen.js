@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const fetch = require("node-fetch");
 var express = require('express');
 var bodyParser = require('body-parser'); 
-var mysql = require('mysql');
+
 var objExpress = express(); 
 objExpress.use(bodyParser.json());
 objExpress.use(bodyParser.urlencoded({ extended: true })); 
@@ -82,9 +82,12 @@ let ubication = {
                     objData.description = data["weather"][0]["description"];
                     objData.currenttemp = data["main"]["temp"];
                     objData.mintemp = data["main"]["temp_min"];
-                    objData.maxtemp = data["main"]["temp_max"]
-                    
-                    
+                    objData.maxtemp = data["main"]["temp_max"];
+                    objData.humidity = data["main"]["humidity"];
+                    objData.pressure = data["main"]["pressure"];
+                    objData.speedWind = data["wind"]["speed"];
+                    objData.degreeWind = data["wind"]["deg"];
+                    objData.rain = data["rain"]["3h"];
                     guardarObjetoEnMysql(con, objData,longtitude,latitude,pname);
                     
                 });  
@@ -99,7 +102,7 @@ let ubication = {
           function guardarObjetoEnMysql( conexion, objWeather, pLon, pLat, pName){
             let date = new Date();
             console.log(date);
-            let sql = "INSERT INTO Datos VALUES (0,'"+pName+"','"+objWeather.description+"','"+objWeather.currenttemp+"','"+objWeather.mintemp+"','"+objWeather.maxtemp+"','"+date+"',"+pLon+","+pLat+")";
+            let sql = "INSERT INTO Datos VALUES (0,'"+pName+"','"+objWeather.description+"','"+objWeather.currenttemp+"','"+objWeather.mintemp+"','"+objWeather.maxtemp+"','"+objWeather.humidity+"','"+objWeather.pressure+"','"+objWeather.speedWind+"','"+objWeather.degreeWind+"','"+objWeather.rain+"','"+date+"',"+pLon+","+pLat+")";
             conexion.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("1 record inserted");
@@ -217,7 +220,7 @@ function DeleteDato(objDato,resp) {
       CreateDatos(oDataOP, res);
      break;
      
-     case 'READ':
+     case 'READ-WEATHER':
       ReadDatos(res);
      break;
      
