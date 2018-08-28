@@ -16,7 +16,7 @@ let con = mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
     password: "123456",
-    database:"db_historicweather"
+    database:"db_historicWeather"
 });  
 const clientIdWeather = "65b4b079ea9713f18c751ab13470af86";
  
@@ -50,7 +50,7 @@ let ubication = {
 }
        
  //interval of time to obtains data of the weather       
-        let nu = setInterval(function(){getAllWeatherFomObject(ubication)},10000);
+        let nu = setInterval(function(){getAllWeatherFomObject(ubication)},3600000);
  //obtains data of the weather for all points of the ubication     
         function getAllWeatherFomObject (obj){
             var lim= Object.keys(obj).length;
@@ -177,6 +177,26 @@ function ReadDatos(resp) {
     }    
   });    
 }
+
+function ReadDatosforCity(resp, city) {
+  var query = "SELECT * FROM datos where name="+city;
+  con.query(query, function(err, rows, col) {
+    if(err) {
+     resp.write(JSON.stringify({
+        error: true,
+        error_object: err
+      }));
+     resp.end();
+    } else {
+     resp.write(JSON.stringify({
+        error: false,
+        data: rows
+      }));
+     resp.end();            
+    }    
+  });    
+}
+
 function UpdateDatos(objDato,resp) {
   var query = "UPDATE datos SET last_updated = NOW() ";
   if(objDato.hasOwnProperty('nombre')) {
