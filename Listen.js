@@ -273,7 +273,15 @@ function DeleteDato(objDato,resp) {
      case 'READ-WEATHER':
       ReadDatos(res);
      break;
+
+     case 'READ-WEATHER-CITY-CURRENT':
+     ReadDatosCurrentforCity(res,oDataOP.city);
+     break;
      
+     case 'READ-WEATHER-CITY-BETWEEN-DATEX-TO-DATEY':
+      ReadDatos(res,oDataOP.city,oDataOP.dateX, oDataOP.dataY);
+     break;
+
      case 'UPDATE':
       UpdateDatos(oDataOP, res);
      break;
