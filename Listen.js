@@ -178,8 +178,28 @@ function ReadDatos(resp) {
   });    
 }
 
-function ReadDatosforCity(resp, city) {
-  var query = "SELECT * FROM datos where name="+city;
+function ReadDatosCurrentforCity(resp, city) {
+  var query = "SELECT * FROM Datos where name="+city+" DESC LIMIT 1";
+  con.query(query, function(err, rows, col) {
+    if(err) {
+     resp.write(JSON.stringify({
+        error: true,
+        error_object: err
+      }));
+     resp.end();
+    } else {
+     resp.write(JSON.stringify({
+        error: false,
+        data: rows
+      }));
+     resp.end();            
+    }    
+  });    
+}
+function ReadDatosDateYToDateZforCity(resp, city, datex, datey) {
+
+  var query = "SELECT * FROM Datos where name="+city+"and dateWeather BETWEEN "+datex+ "AND" + datey;
+  
   con.query(query, function(err, rows, col) {
     if(err) {
      resp.write(JSON.stringify({
